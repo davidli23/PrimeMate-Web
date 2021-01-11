@@ -13,7 +13,6 @@ const PrimerResults = () => {
 		.then((apiRes) => {
 			setPrimer(apiRes.primerPairs[0].fPrimer);
 		});
-
 	return (
 		<>
 			<h3>first priemr</h3>
