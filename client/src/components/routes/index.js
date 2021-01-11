@@ -23,7 +23,7 @@ const ReactRouterSetup = () => {
 			<Route exact path="/primers">
 				<Primers />
 			</Route>
-			<Route path="/primers/results/:transid">
+			<Route path="/primers/results/:id">
 				<PrimerResults />
 			</Route>
 		</Router>

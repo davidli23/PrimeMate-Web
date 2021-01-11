@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import './_primerForm.scss';
 
 const PrimerForm = () => {
 	const [transID, setTransID] = useState('');
+
+	const history = useHistory();
 
 	const handleChange = (e) => {
 		setTransID(e.target.value);
@@ -10,7 +13,7 @@ const PrimerForm = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(transID);
+		history.push('/primers/results/'.concat(transID));
 	};
 
 	return (
