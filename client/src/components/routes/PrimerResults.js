@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 const PrimerResults = () => {
 	const [primer, setPrimer] = useState('');
 	const { id } = useParams();
-	fetch('/api/primers/'.concat(id))
+	fetch('https://primemate-server.herokuapp.com/api/primers/'.concat(id))
 		.then((res) => res.json())
 		.catch((err) => {
 			console.log('nope');
