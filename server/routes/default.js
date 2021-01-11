@@ -3,7 +3,7 @@ const router = express.Router();
 const primers = require('../controllers/primers/primers');
 
 router.get('/', (req, res) => {
-	res.send('hello');
+	res.json({ text: 'hello' });
 });
 
 module.exports = router;
