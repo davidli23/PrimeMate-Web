@@ -14,7 +14,7 @@ const PrimerResults = () => {
 	// 		setPrimer(apiRes.primerPairs[0].fPrimer);
 	// 	});
 
-	fetch('"https://primemate-server.herokuapp.com/test')
+	fetch('https://primemate-server.herokuapp.com/test')
 		.then((res) => res.json())
 		.then((apiRes) => {
 			setPrimer(apiRes.text);
