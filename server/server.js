@@ -3,7 +3,7 @@ const axios = require('axios');
 
 const app = express();
 
-app.use('/', require('./routes/default'));
+app.use('/test', require('./routes/test'));
 app.use('/api/primers/', require('./routes/primers'));
 
 const port = process.env.PORT || 5000;

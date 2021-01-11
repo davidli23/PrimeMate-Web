@@ -17,8 +17,7 @@ const PrimerResults = () => {
 	fetch('/')
 		.then((res) => res.json())
 		.then((apiRes) => {
-			console.log(apiRes);
-			setPrimer(apiRes);
+			setPrimer(apiRes.text);
 		});
 	return (
 		<>
