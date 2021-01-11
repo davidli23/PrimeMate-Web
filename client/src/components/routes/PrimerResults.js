@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 
 const PrimerResults = () => {
 	const [primer, setPrimer] = useState('');
-	const { id } = useParams();
+	//const { id } = useParams();
 	// fetch('/api/primers/'.concat(id))
 	// 	.then((res) => res.json())
 	// 	.catch((err) => {
