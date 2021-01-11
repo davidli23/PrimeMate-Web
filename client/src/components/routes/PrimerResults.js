@@ -18,7 +18,8 @@ const PrimerResults = () => {
 		.then((res) => res.json())
 		.then((apiRes) => {
 			setPrimer(apiRes.text);
-		});
+		})
+		.catch((err) => console.log(err));
 
 	return (
 		<>
