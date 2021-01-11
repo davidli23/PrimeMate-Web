@@ -1,0 +1,19 @@
+{
+	"name": "primemate-web",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"push-server": "git subtree push --prefix server heroku master"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/davidli23/PrimeMate-Web.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/davidli23/PrimeMate-Web/issues"
+	},
+	"homepage": "https://github.com/davidli23/PrimeMate-Web#readme"
+}
