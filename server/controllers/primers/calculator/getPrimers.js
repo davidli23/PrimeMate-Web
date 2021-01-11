@@ -1,24 +1,7 @@
 // Exports getPrimers function
 
 const PrimerPair = require('./PrimerPair');
-
-const params = {
-	length: {
-		lower: 18,
-		upper: 24,
-		total: 100,
-	},
-	percentGC: {
-		lower: 40,
-		upper: 60,
-	},
-	temperature: {
-		type: 'Salt',
-		ideal: 60,
-	},
-	dimerThresh: 5,
-	exonOneChecked: false,
-};
+const { params, NaConc } = require('./params');
 
 const minLen = params.length.lower;
 const maxLen = params.length.upper;
@@ -49,7 +32,13 @@ const getPrimers = (exons) => {
 				fLeft++
 			) {
 				let primerPair = bestPrimerPair(exons, exonInd, fLeft);
-				if (primerPair != null) {
+				primerPair.fHairpin = hasHairpin(primerPair.fPrimer);
+				primerPair.rHairpin = hasHairpin(primerPair.rPrimer);
+				primerPair.dimer =
+					isDimer(primerPair.fPrimer, primerPair.rPrimer) ||
+					isDimer(primerPair.fPrimer, primerPair.fPrimer) ||
+					isDimer(primerPair.rPrimer, primerPair.rPrimer);
+				if (primerPair != null && isValidPair(primerPair)) {
 					primerPairs.push(primerPair);
 					primerPair.id = i;
 					i += 1;
@@ -60,8 +49,7 @@ const getPrimers = (exons) => {
 	primerPairs.sort(function (p1, p2) {
 		return p2.score - p1.score;
 	});
-	console.log(primerPairs);
-	return primerPairs;
+	return { length: primerPairs.length, primerPairs: primerPairs };
 };
 
 const bestPrimerPair = (exons, exonInd, fLeft) => {

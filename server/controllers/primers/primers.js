@@ -9,7 +9,6 @@ exports.primers = (req, res) => {
 				.concat('?mask_feature=1')
 		)
 		.then((ensRes) => {
-			console.log(calculator(ensRes.data.seq));
 			res.send(calculator(ensRes.data.seq));
 		})
 		.catch(() => {

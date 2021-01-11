@@ -1,6 +1,8 @@
 // Exports PrimerPair class
 
-class PrimerPair {
+const { params, NaConc, weights } = require('./params');
+
+const PrimerPair = class {
 	constructor(exons, exonInd, fLeft, fRight, rLeft, rRight) {
 		// General info
 		this.id;
@@ -16,16 +18,16 @@ class PrimerPair {
 		this.rInd = rLeft;
 		this.fLen = fRight - fLeft;
 		this.rLen = rRight - rLeft;
-		this.fClamps = this.clamps(this.fPrimer);
-		this.rClamps = this.clamps(this.rPrimer);
-		let fGCATContent = this.GCATContent(this.fPrimer);
-		let rGCATContent = this.GCATContent(this.rPrimer);
-		this.fPercentGC = this.percentGC(fGCATContent);
-		this.rPercentGC = this.percentGC(rGCATContent);
-		this.fMeltTempBasic = this.meltTempBasic(fGCATContent);
-		this.rMeltTempBasic = this.meltTempBasic(rGCATContent);
-		this.fMeltTempSalt = this.meltTempSalt(fGCATContent);
-		this.rMeltTempSalt = this.meltTempSalt(rGCATContent);
+		this.fClamps = clamps(this.fPrimer);
+		this.rClamps = clamps(this.rPrimer);
+		let fGCATContent = GCATContent(this.fPrimer);
+		let rGCATContent = GCATContent(this.rPrimer);
+		this.fPercentGC = percentGC(fGCATContent);
+		this.rPercentGC = percentGC(rGCATContent);
+		this.fMeltTempBasic = meltTempBasic(fGCATContent);
+		this.rMeltTempBasic = meltTempBasic(rGCATContent);
+		this.fMeltTempSalt = meltTempSalt(fGCATContent);
+		this.rMeltTempSalt = meltTempSalt(rGCATContent);
 		this.meltTempDiffBasic = Math.abs(
 			this.fMeltTempBasic - this.rMeltTempBasic
 		);
@@ -41,82 +43,11 @@ class PrimerPair {
 		this.score = this.score();
 	}
 
-	reverseComplement(primer) {
-		let arr = new Array(primer.length);
-		for (let i = 0; i < primer.length; i++) {
-			switch (primer.substring(i, i + 1)) {
-				case 'C':
-					arr[primer.length - 1 - i] = 'G';
-					break;
-				case 'G':
-					arr[primer.length - 1 - i] = 'C';
-					break;
-				case 'A':
-					arr[primer.length - 1 - i] = 'T';
-					break;
-				case 'T':
-					arr[primer.length - 1 - i] = 'A';
-					break;
-			}
-		}
-		return arr.join('');
-	}
-
-	GCATContent(primer) {
-		let content = {
-			total: 0,
-			G: 0,
-			C: 0,
-			A: 0,
-			T: 0,
-		};
-		for (let base of primer) {
-			content[base] += 1;
-			content.total += 1;
-		}
-		return content;
-	}
-
-	clamps(primer) {
-		return {
-			starts:
-				(primer.charAt(0) == 'G' || primer.charAt(0) == 'C') &&
-				(primer.charAt(1) == 'G' || primer.charAt(1) == 'C'),
-			ends:
-				(primer.charAt(primer.length - 2) == 'G' ||
-					primer.charAt(primer.length - 2) == 'C') &&
-				(primer.charAt(primer.length - 1) == 'G' ||
-					primer.charAt(primer.length - 1) == 'C'),
-		};
-	}
-
-	percentGC(content) {
-		return (100 * (content.G + content.C)) / content.total;
-	}
-
-	meltTempBasic(content) {
-		return (
-			64.9 +
-			(41 * (content.G + content.C - 16.4)) /
-				(content.A + content.T + content.G + content.C)
-		);
-	}
-
-	meltTempSalt(content) {
-		return (
-			100.5 +
-			(41 * (content.G + content.C)) /
-				(content.A + content.T + content.G + content.C) -
-			820 / (content.A + content.T + content.G + content.C) +
-			16.6 * Math.log10(NaConc)
-		);
-	}
-
 	score() {
-		let tempDiffBound = 5;
-		let indTempBound = 5;
-		let lengthBound = 20;
-		let GCContentBound = 10;
+		const tempDiffBound = 5;
+		const indTempBound = 5;
+		const lengthBound = 20;
+		const GCContentBound = 10;
 		if (params.temperature.type == 'Basic') {
 			this.tempDiffScore = purity(this.meltTempDiffBasic, 0, tempDiffBound);
 			this.indMeltTempScore =
@@ -192,6 +123,87 @@ class PrimerPair {
 			weights.clamps * this.clampScore
 		);
 	}
-}
+};
+
+const reverseComplement = (primer) => {
+	let arr = new Array(primer.length);
+	for (let i = 0; i < primer.length; i++) {
+		switch (primer.substring(i, i + 1)) {
+			case 'C':
+				arr[primer.length - 1 - i] = 'G';
+				break;
+			case 'G':
+				arr[primer.length - 1 - i] = 'C';
+				break;
+			case 'A':
+				arr[primer.length - 1 - i] = 'T';
+				break;
+			case 'T':
+				arr[primer.length - 1 - i] = 'A';
+				break;
+		}
+	}
+	return arr.join('');
+};
+
+const GCATContent = (primer) => {
+	let content = {
+		total: 0,
+		G: 0,
+		C: 0,
+		A: 0,
+		T: 0,
+	};
+	for (let base of primer) {
+		content[base] += 1;
+		content.total += 1;
+	}
+	return content;
+};
+
+const clamps = (primer) => {
+	return {
+		starts:
+			(primer.charAt(0) == 'G' || primer.charAt(0) == 'C') &&
+			(primer.charAt(1) == 'G' || primer.charAt(1) == 'C'),
+		ends:
+			(primer.charAt(primer.length - 2) == 'G' ||
+				primer.charAt(primer.length - 2) == 'C') &&
+			(primer.charAt(primer.length - 1) == 'G' ||
+				primer.charAt(primer.length - 1) == 'C'),
+	};
+};
+
+const percentGC = (content) => {
+	return (100 * (content.G + content.C)) / content.total;
+};
+
+const meltTempBasic = (content) => {
+	return (
+		64.9 +
+		(41 * (content.G + content.C - 16.4)) /
+			(content.A + content.T + content.G + content.C)
+	);
+};
+
+const meltTempSalt = (content) => {
+	return (
+		100.5 +
+		(41 * (content.G + content.C)) /
+			(content.A + content.T + content.G + content.C) -
+		820 / (content.A + content.T + content.G + content.C) +
+		16.6 * Math.log10(NaConc)
+	);
+};
+
+// Ideal has value of 1, approaches 0 as closer to bound
+const purity = (value, ideal, bound) => {
+	// Normal distr
+	//SD = bound / 2;
+	//return Math.exp(-0.5 * Math.pow((value - ideal) / SD, 2));
+
+	// Linear
+	return Math.max(-1 * Math.abs((value - ideal) / bound) + 1, 0);
+};
 
 module.exports = PrimerPair;
