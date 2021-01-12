@@ -1,12 +1,16 @@
 import React from 'react';
+
+import Container from '../modules/container/Container';
 import Title from '../modules/title/Title';
 
 const Home = () => {
 	return (
-		<React.Fragment>
+		<Container>
 			<Title />
-			<h1>HOME</h1>
-		</React.Fragment>
+			<h2 style={{ textAlign: 'center' }}>
+				Welcome to the official PrimeMate website!
+			</h2>
+		</Container>
 	);
 };
 

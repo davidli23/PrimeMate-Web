@@ -1,6 +1,6 @@
-ul.navbar {
+.navbar {
 	list-style-type: none;
-	background-color: rgb(0, 255, 255);
+	background-color: #003380;
 	overflow: hidden;
 	box-shadow: 0 2px 3px rgb(128, 128, 128);
 	li {
@@ -9,14 +9,15 @@ ul.navbar {
 			display: block;
 			text-align: center;
 			text-decoration: none;
-			padding: 0.8rem 1rem;
-			font-size: 1.2rem;
-			color: rgb(0, 0, 0);
+			padding: 1rem 1rem;
+			font-size: 1.25rem;
 			&:hover {
-				background-color: rgb(0, 204, 204);
+				background-color: #0047b3;
 			}
-			&:active {
-				color: inherit;
+			&,
+			&:active,
+			&:focus {
+				color: #ffffff;
 			}
 		}
 		&.nav-right {

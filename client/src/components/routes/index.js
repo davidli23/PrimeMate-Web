@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 import Navbar from '../modules/navbar/Navbar';
 import Home from './Home';
@@ -12,7 +12,7 @@ const ReactRouterSetup = () => {
 		<Router>
 			<Navbar />
 			<Route exact path="/">
-				<Home />
+				<Redirect to="/home" />
 			</Route>
 			<Route path="/home">
 				<Home />

@@ -13,7 +13,7 @@ const PrimerForm = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		history.push('/primers/results/'.concat(transID));
+		history.push('/primers/results/'.concat(transID.split('.')[0]));
 	};
 
 	return (
