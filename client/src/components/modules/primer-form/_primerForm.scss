@@ -1,25 +1,24 @@
-form {
+form.search-form {
 	display: block;
-	justify-content: center;
-	margin: auto;
+	margin: 1rem auto;
 	width: fit-content;
-	padding: 1rem 1rem;
 	label {
-		display: block;
-		margin: auto;
+		display: inline;
+		margin-right: 1rem;
 		font-size: 1.2rem;
 	}
 	input {
-		display: block;
 		margin: 0.5rem 0;
 		&[type='text'] {
+			display: inline;
 			padding: 0.3rem 0.3rem;
 			font-size: 1rem;
 			border-radius: 0.3rem;
 			border-width: 1px;
 		}
 		&[type='submit'] {
-			margin: auto;
+			display: block;
+			margin: 0.5rem auto;
 			font-size: 1rem;
 			padding: 0.25rem 0.4rem;
 			&:hover {

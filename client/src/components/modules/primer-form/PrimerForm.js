@@ -17,15 +17,15 @@ const PrimerForm = () => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
-			<label htmlFor="trans-id">Transcript ID</label>
+		<form className="search-form" onSubmit={handleSubmit}>
+			<label htmlFor="trans-id">Transcript ID:</label>
 			<input
 				type="text"
 				id="trans-id"
 				value={transID}
 				onChange={handleChange}
 			/>
-			<input type="submit" />
+			<input type="submit" value="Go" />
 		</form>
 	);
 };
