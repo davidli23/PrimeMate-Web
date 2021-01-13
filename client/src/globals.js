@@ -1,5 +1,5 @@
 const globals = {
-	SERVER_HOST: 'localhost:5000',
+	SERVER_HOST: 'https://primemate-server.herokuapp.com',
 };
 
 export default globals;

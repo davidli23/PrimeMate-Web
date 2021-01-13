@@ -8,7 +8,7 @@ const PrimerResults = () => {
 	const [isCalculating, setIsCalculating] = useState(true);
 	const { id } = useParams();
 	useEffect(() => {
-		fetch(`http://${globals.SERVER_HOST}/api/primers/${id}`)
+		fetch(`${globals.SERVER_HOST}/api/primers/${id}`)
 			.then((res) => res.json())
 			.then((primers) => {
 				setPrimer(primers.primerPairs[0].fPrimer);
