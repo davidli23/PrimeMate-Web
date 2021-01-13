@@ -4,6 +4,8 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
+		"push-all": "npm build && netlify deploy --prod && git subtree push --prefix server heroku master",
+		"push-client": "npm build && netlify deploy --prod",
 		"push-server": "git subtree push --prefix server heroku master"
 	},
 	"repository": {

@@ -1,18 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import globals from '../../globals';
 
 import { useParams } from 'react-router-dom';
 
 const PrimerResults = () => {
 	const [primer, setPrimer] = useState('');
+	const [isCalculating, setIsCalculating] = useState(true);
 	const { id } = useParams();
-	fetch('https://primemate-server.herokuapp.com/api/primers/'.concat(id))
-		.then((res) => res.json())
-		.catch((err) => {
-			console.log('nope');
-		})
-		.then((apiRes) => {
-			setPrimer(apiRes.primerPairs[0].fPrimer);
-		});
+	useEffect(() => {
+		fetch(`http://${globals.SERVER_HOST}/api/primers/${id}`)
+			.then((res) => res.json())
+			.then((primers) => {
+				setPrimer(primers.primerPairs[0].fPrimer);
+				setIsCalculating(false);
+			})
+			.catch((err) => {
+				setIsCalculating(false);
+				setPrimer('Invalid id');
+			});
+	}, [id]);
 
 	// fetch('https://primemate-server.herokuapp.com/test')
 	// 	.then((res) => res.json())
@@ -23,6 +29,7 @@ const PrimerResults = () => {
 
 	return (
 		<>
+			{isCalculating && <h4>Calculating</h4>}
 			<h3>First Forward Primer</h3>
 			<p style={{ wordBreak: 'break-all' }}>{primer}</p>
 		</>

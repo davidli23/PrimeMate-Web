@@ -12,6 +12,6 @@ exports.primers = (req, res) => {
 			res.send(calculator(ensRes.data.seq));
 		})
 		.catch(() => {
-			//console.log('Invalid id');
+			res.status(400).send('Invalid id');
 		});
 };
