@@ -33,17 +33,20 @@ const getPrimers = (exons) => {
 			) {
 				let primerPair = bestPrimerPair(exons, exonInd, fLeft);
 				if (primerPair != null) {
-					primerPair.fHairpin = hasHairpin(primerPair.fPrimer);
-					primerPair.rHairpin = hasHairpin(primerPair.rPrimer);
-					primerPair.dimer =
-						isDimer(primerPair.fPrimer, primerPair.rPrimer) ||
-						isDimer(primerPair.fPrimer, primerPair.fPrimer) ||
-						isDimer(primerPair.rPrimer, primerPair.rPrimer);
-					if (isValidPair(primerPair)) {
-						primerPairs.push(primerPair);
-						primerPair.id = i;
-						i += 1;
-					}
+					// primerPair.fHairpin = hasHairpin(primerPair.fPrimer);
+					// primerPair.rHairpin = hasHairpin(primerPair.rPrimer);
+					// primerPair.dimer =
+					// 	isDimer(primerPair.fPrimer, primerPair.rPrimer) ||
+					// 	isDimer(primerPair.fPrimer, primerPair.fPrimer) ||
+					// 	isDimer(primerPair.rPrimer, primerPair.rPrimer);
+					// if (isValidPair(primerPair)) {
+					// 	primerPairs.push(primerPair);
+					// 	primerPair.id = i;
+					// 	i += 1;
+					// }
+					primerPairs.push(primerPair);
+					primerPair.id = i;
+					i += 1;
 				}
 			}
 		}
