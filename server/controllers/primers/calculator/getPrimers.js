@@ -32,16 +32,18 @@ const getPrimers = (exons) => {
 				fLeft++
 			) {
 				let primerPair = bestPrimerPair(exons, exonInd, fLeft);
-				primerPair.fHairpin = hasHairpin(primerPair.fPrimer);
-				primerPair.rHairpin = hasHairpin(primerPair.rPrimer);
-				primerPair.dimer =
-					isDimer(primerPair.fPrimer, primerPair.rPrimer) ||
-					isDimer(primerPair.fPrimer, primerPair.fPrimer) ||
-					isDimer(primerPair.rPrimer, primerPair.rPrimer);
-				if (primerPair != null && isValidPair(primerPair)) {
-					primerPairs.push(primerPair);
-					primerPair.id = i;
-					i += 1;
+				if (primerPair != null) {
+					primerPair.fHairpin = hasHairpin(primerPair.fPrimer);
+					primerPair.rHairpin = hasHairpin(primerPair.rPrimer);
+					primerPair.dimer =
+						isDimer(primerPair.fPrimer, primerPair.rPrimer) ||
+						isDimer(primerPair.fPrimer, primerPair.fPrimer) ||
+						isDimer(primerPair.rPrimer, primerPair.rPrimer);
+					if (isValidPair(primerPair)) {
+						primerPairs.push(primerPair);
+						primerPair.id = i;
+						i += 1;
+					}
 				}
 			}
 		}
@@ -49,7 +51,7 @@ const getPrimers = (exons) => {
 	primerPairs.sort(function (p1, p2) {
 		return p2.score - p1.score;
 	});
-	return { length: primerPairs.length, primerPairs: primerPairs };
+	return primerPairs;
 };
 
 const bestPrimerPair = (exons, exonInd, fLeft) => {

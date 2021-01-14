@@ -1,22 +1,28 @@
 import React, { useState, useEffect } from 'react';
+import SyncLoader from 'react-spinners/SyncLoader';
+import ResultsPage from '../modules/primer-results/Results';
+
 import globals from '../../globals';
 
 import { useParams } from 'react-router-dom';
 
+const loaderColor = '#404040';
+
 const PrimerResults = () => {
-	const [primer, setPrimer] = useState('');
+	const [primerPairs, setPrimerPairs] = useState([]);
+	const [transName, setTransName] = useState('');
 	const [isCalculating, setIsCalculating] = useState(true);
 	const { id } = useParams();
 	useEffect(() => {
 		fetch(`${globals.SERVER_HOST}/api/primers/${id}`)
 			.then((res) => res.json())
-			.then((primers) => {
-				setPrimer(primers.primerPairs[0].fPrimer);
+			.then((apiRes) => {
+				setTransName(apiRes.name);
+				setPrimerPairs(apiRes.primerPairs);
 				setIsCalculating(false);
 			})
 			.catch((err) => {
 				setIsCalculating(false);
-				setPrimer('Invalid id');
 			});
 	}, [id]);
 
@@ -29,9 +35,12 @@ const PrimerResults = () => {
 
 	return (
 		<>
-			{isCalculating && <h4>Calculating</h4>}
-			<h3>First Forward Primer</h3>
-			<p style={{ wordBreak: 'break-all' }}>{primer}</p>
+			<div className="center-content">
+				<SyncLoader loading={isCalculating} color={loaderColor} size={25} />
+			</div>
+			{!isCalculating && (
+				<ResultsPage name={transName} primerPairs={primerPairs} />
+			)}
 		</>
 	);
 };

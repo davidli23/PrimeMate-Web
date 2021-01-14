@@ -8,11 +8,11 @@ import {
 
 import Navbar from '../modules/navbar/Navbar';
 import Container from '../modules/container/Container';
-import Home from './Home';
-import Login from './Login';
-import Primers from './Primers';
-import PrimerResults from './PrimerResults';
-import NotFound from './NotFound';
+import Home from './HomePage';
+import Login from './LoginPage';
+import Primers from './PrimersPage';
+import PrimerResults from './PrimerResultsPage';
+import NotFound from './NotFoundPage';
 
 const ReactRouterSetup = () => {
 	return (
